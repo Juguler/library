@@ -8,6 +8,7 @@ function Book(title, author, pages, readStatus) {
 }
 
 function addBookToLibrary(title, author, pages, readStatus) {
+    newBook.classList.add('book-card')
     const newBook = new Book(title, author, pages, readStatus)
     myLibrary.push(newBook)
 }
@@ -17,15 +18,14 @@ addBookToLibrary('To Kill a Mockingbird', 'Harper Lee', 324, false);
 addBookToLibrary('1984', 'George Orwell', 328, true);
 
 function displayBooks() {
-    const libraryDiv = document.getElementById('library'); // Assuming you have a div with id 'library'
-    libraryDiv.innerHTML = ''; // Clear the div
+    const libraryDiv = document.getElementById('content');
+    libraryDiv.innerHTML = '';
   
     for (let i = 0; i < myLibrary.length; i++) {
       const book = myLibrary[i];
       const bookDiv = document.createElement('div');
-      bookDiv.classList.add('book-card'); // Assuming you have CSS styles for 'book-card'
+      bookDiv.classList.add('book-card');
   
-      // Create the book details
       const title = document.createElement('h2');
       title.textContent = book.title;
       bookDiv.appendChild(title);
@@ -42,7 +42,6 @@ function displayBooks() {
       read.textContent = 'Read: ' + (book.read ? 'Yes' : 'No');
       bookDiv.appendChild(read);
   
-      // Add the book card to the library div
       libraryDiv.appendChild(bookDiv);
     }
 }
