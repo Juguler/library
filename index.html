@@ -10,31 +10,31 @@
 <body>
     <div class ="header">
         <h1>My Library</h1>
-        <button class="add-book" id="add-btn" onclick="openForm()">+ Add new book</button>
+        <button class="add-book" id="add-btn">+ Add new book</button>
     </div>
-    <div class="content" id="content">
-        <div class="book-card" id="book-card">
+    <div class="books" id="books">
+        <div class="book-list" id="book-list">
+
         </div>
+        <!--<div class="book-card" id="book-card"></div>-->
     </div>
     <div class="footer">
         <p>Created by <a href="https://github.com/Juguler" rel="external" target="_blank">Emre Elci</a></p>
     </div>
-    <div class="modal-active" id="modalActive">
-        <a class="close-button" href="#">×</a>
-        <form id="newBookForm" class="newBookForm">
+        <form action ="/" method="dialog" method="GET" id="form" class="newBookForm" style="display:grid">
             <h1>New Book</h1>
             <label for="title">Title:</label><br>
-            <input type="text" id="title" name="title"><br>
+            <input type = "text" id = "name" class = "book-input" required><br>
             <label for="author">Author:</label><br>
-            <input type="text" id="author" name="author"><br>
+            <input type = "text" id = "author" class = "book-input" required><br>
             <label for="pages">Number of Pages:</label><br>
-            <input type="number" id="pages" name="pages"><br>
-            <label for="read">Read:</label><br>
-            <input type="checkbox" id="read" name="read"><br>
-            <button type="submit">Submit</button>
-            <button type="button" id="delete-book-btn">Delete</button>
+            <input type = "number" id = "pages" class = "book-input" required><br>
+            <div class="input-flag">
+                <label for = "read-flag">Read already</label>
+                <input type = "checkbox" id = "read-flag" class = "book-input" >
+            </div>
+            <button type="submit" class="add-book-button">Submit</button>
         </form>
-    </div>
     <script src="script.js"></script>
 </body>
 </html>

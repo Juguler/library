@@ -1,4 +1,9 @@
 const myLibrary = [];
+const bookInput = document.querySelectorAll('.book-input')
+const books = document.querySelector('.books')
+const addBook = document.querySelector('.newBookForm')
+const newBookButton = document.querySelector('.add-book')  
+const addBookButton = document.querySelector('.add-book-button')
 
 function Book(title, author, pages, readStatus) {
     this.title = title
@@ -8,104 +13,119 @@ function Book(title, author, pages, readStatus) {
 }
 
 function addBookToLibrary(title, author, pages, readStatus) {
-    newBook.classList.add('book-card')
-    const newBook = new Book(title, author, pages, readStatus)
+    const newBook = new Book(
+        bookInput[0].value, 
+        bookInput[1].value, 
+        bookInput[2].value, 
+        bookInput[3].checked)
     myLibrary.push(newBook)
 }
 
-document.querySelector('.close-button').addEventListener('click', function () {
-    document.getElementById('modalActive').style.display = 'none';
-});
 
-function displayBooks() {
-    const libraryDiv = document.getElementById('content');
-    libraryDiv.innerHTML = '';
-  
-    for (let i = 0; i < myLibrary.length; i++) {
-        const book = myLibrary[i];
-        const bookDiv = document.createElement('div');
-        bookDiv.classList.add('book-card');
-    
-        const title = document.createElement('h2');
-        title.textContent = book.title;
-        bookDiv.appendChild(title);
-    
-        const author = document.createElement('p');
-        author.textContent = 'Author: ' + book.author;
-        bookDiv.appendChild(author);
-    
-        const pages = document.createElement('p');
-        pages.textContent = 'Pages: ' + book.pages;
-        bookDiv.appendChild(pages);
-    
-        const read = document.createElement('p');
-        read.textContent = 'Read: ' + (book.read ? 'Yes' : 'No');
-        bookDiv.appendChild(read);
+newBookButton.addEventListener('click', () => {  
+    for (i = 0; i < 3; i++){     
+        bookInput[i].value = ''
+    }               
+    hideOnOutsideClick()
+    addBook.style.display = ('grid')         
+})
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.addEventListener('click', () => {
-            myLibrary.splice(i, 1);
-            displayBooks();
-        });
-            const toggleReadBtn = document.createElement('button');
-            toggleReadBtn.textContent = 'Toggle Read';
-            toggleReadBtn.addEventListener('click', () => {
-                book.read = !book.read;
-                displayBooks();
-        });
-        bookDiv.appendChild(toggleReadBtn);
-        libraryDiv.appendChild(bookDiv);
+
+addBookButton.addEventListener('click', () => {
+    
+    for (i = 0; i < 3; i++){     
+        if (!bookInput[i].value) return
     }
+
+    addBookToLibrary()                     
+    printLibrary()
+    addBook.style.display = 'none'
+})
+function hideOnOutsideClick() {
+    document.addEventListener( 'click', (event) => {
+        const withinBoundaries = event.composedPath().includes(addBook);
+     
+        if ( ! withinBoundaries ) {	
+            addBook.style.display = 'none'    
+        }
+    
+    }, once = true)
 }
-addBookToLibrary('1984', 'George Orwell', 328, true);
-displayBooks();
+addBook.addEventListener("submit", (e) => {
+    e.preventDefault();  
+})
+function printLibrary(){                                              
+    const booksListBefore = document.querySelector('.book-list')
+    books.removeChild(booksListBefore)
+    
+    const booksListAfter = document.createElement('div')
+    booksListAfter.classList.add('book-list')
+    
+    for(let unit of myLibrary){                                       
+        const card = document.createElement('div')
+        const bookTitle = document.createElement('div')
+        const bookAuthor = document.createElement('div')
+        const bookPages = document.createElement('div')
+        const statusButton = document.createElement('button')
+        const removeButton = document.createElement('button')
+        
+        card.classList.add('card')
+        bookTitle.classList.add('bookTitle')
+        bookAuthor.classList.add('bookAuthor')
+        bookPages.classList.add('bookPages')
+        statusButton.classList.add('statusButton')
+        removeButton.classList.add('removeButton')
+        
 
-document.getElementById('add-btn').addEventListener('click', function () {
-    document.getElementById('modalActive').style.display = 'block';
-});
+        bookTitle.textContent =  unit.title
+        bookAuthor.textContent = 'By ' + unit.author
+        bookPages.textContent = unit.pages + ' pages'
+        let status = 'NOT READ'
+        statusButton.style.backgroundColor = 'rgb(177, 88, 88)'
+        if (unit.status) {
+            status = 'READ'
+            statusButton.style.backgroundColor = 'rgb(41, 75, 40)'
+        }
+        statusButton.textContent = status
+        removeButton.textContent = 'DELETE'
 
-/*document.getElementById('add-btn').addEventListener('click', (e) => {
-    e.preventDefault();
-
-    document.querySelector('#modal_edit h3').innerText = 'Add New Book';
-    document.querySelector('#new_book button').innerText = 'Add Book';
-    document.getElementById('new_title').value = '';
-    document.getElementById('new_author').value = '';
-    document.getElementById('new_pages').value = '';
-    document.getElementById('new_published').value = '';
-    document.getElementById('new_acquired').valueAsDate = new Date();
-    document.getElementById('new_status').value = '0';
-    document.getElementById('new_id').value = '';
-
-    this.modal.open('modal_edit');
-});*/
-
-document.getElementById('newBookForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const bookCard = document.getElementById('book-card');
-    const title = document.getElementById('title').value;
-    const author = document.getElementById('author').value;
-    const pages = document.getElementById('pages').value;
-    const read = document.getElementById('read').checked;
-
-    bookCard.innerHTML = `
-        <h2>${title}</h2>
-        <h3>Author: ${author}</h3>
-        <p>Number of Pages: ${pages}</p>
-        <p>Read: ${read ? 'Yes' : 'No'}</p>
-    `;
-
-    document.getElementById('modalActive').style.display = 'none';
-});
-document.getElementById('delete-book-btn').addEventListener('click', function () {
-    document.getElementById('book-card').innerHTML = '';
-    document.getElementById('modalActive').style.display = 'none';
-});
-function openForm() {
-    //document.getElementById('modalActive').style.display = 'block';
-    this.modal.open('modalActive');
+        card.appendChild(bookTitle)
+        card.appendChild(bookAuthor)
+        card.appendChild(bookPages)
+        card.appendChild(statusButton)
+        card.appendChild(removeButton)
+        booksListAfter.appendChild(card)
+        console.log(unit)     
+    }
+    
+    books.appendChild(booksListAfter)
+    removeButtonEvents()
+    statusButtonEvents()
+    addBook.style.display = 'none'  
 }
-/*document.getElementById('add-btn').addEventListener('click', function () {
-    openForm();
-});*/
+
+printLibrary()
+
+function removeButtonEvents(){                                         
+    const removeButtons = document.querySelectorAll('.removeButton')
+    let removeButtonsArray = Array.from(removeButtons)
+    removeButtonsArray.forEach((button) => {
+        button.addEventListener('click', () => {
+                myLibrary.splice(removeButtonsArray.indexOf(button),1);
+                printLibrary()
+        });
+    });
+}
+function statusButtonEvents(){                                      
+    const statusButtons = document.querySelectorAll('.statusButton')
+    let statusButtonsArray = Array.from(statusButtons)
+    
+    statusButtonsArray.forEach((button) => {
+        button.addEventListener('click', () => {
+                myLibrary[statusButtonsArray.indexOf(button)].status = 
+                !(myLibrary[statusButtonsArray.indexOf(button)].status)
+                
+                printLibrary()
+        });
+    });
+}

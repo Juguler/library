@@ -26,14 +26,14 @@ body{
     font-weight: 600;
     border: none;
 }
-.content{
+.book-list{
     display: grid;
     gap: 40px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     margin-top: 40px;
 }
 
-.book-card {
+.card{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -44,6 +44,7 @@ body{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     line-height: 24px;
     transition: 0.3s;
+    align-items:center;
 }
 
 .footer{
@@ -75,28 +76,10 @@ form {
     font-size: 20px;
 }
 
-/*.close-button:hover,
-.close-button:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}*/
 
-#newBookForm {
-    display:flex;
-    gap: 45px;
-    width: 100%;
-    height: 100%;
-    color: rgba(255, 255, 255, .5);
-    background-color: #1A1818;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    padding: 10px;
-    border-radius: 5px;
-}
-.modal-active{
+
+/*                      
+.modal-active{                                         From old version
     transform: translate(-50%, -50%) scale(1);
     position: fixed;
     z-index: 1;
@@ -109,10 +92,35 @@ form {
     text-align: center;
     transform: translate(-50%, -50%) scale(0);
     transition: 0.2s ease-in-out;
+}*/
+button:hover{
+    cursor: pointer;
 }
 .add-book-form{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
+}
+
+.newBookForm{
+    box-sizing:border-box;
+    border: 15px solid rgb(49, 112, 112);
+    padding: 1rem;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    grid-template-rows: 1fr 5fr 5fr 5fr 5fr 5fr;
+    gap:10px;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    height: 480px;
+    width: 400px;
+    background-color: rgb(49, 112, 112);
+    box-shadow:  2px 0px 10px rgba(90, 90, 90, 0.671);
 }
